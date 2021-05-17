@@ -5,50 +5,41 @@
 //  Consultation de la BD et affichage des enregistrements dans un tableau
 //
 
-function  SupprimerBD ( $NomRecherche )
+function SupprimerBD($NomRecherche)
 {
-  $id = $_GET['id_t'] ;
-  
-  
+    $id = $_GET['id_t'];
 
-  //--- Connection au SGBDR 
-  include_once('connect.php');
+    //--- Connection au SGBDR
+    include_once 'connect.php';
 
-  //--- Ouverture de la base de données
-  
+    //--- Ouverture de la base de données
 
-  
-  
-  // Delete FROM personne where nom='DUPONT' Limit 1;
-  $sql = "DELETE From Type_de_livre Where id_t='". $id ."' Limit 1;" ;
-  //--- Préparation de la requête
-  $stmt = mysqli_prepare($db,$sql);
-    
-  //--- Exécution de la requête 
-  mysqli_stmt_execute($stmt);
+    // Delete FROM personne where nom='DUPONT' Limit 1;
+    $sql = "DELETE From type_livre Where id_t='" . $id . "' Limit 1;";
+    //--- Préparation de la requête
+    $stmt = mysqli_prepare($db, $sql);
 
-  mysqli_stmt_close($stmt);
+    //--- Exécution de la requête
+    mysqli_stmt_execute($stmt);
 
+    mysqli_stmt_close($stmt);
 
+    //--- Déconnection de la base de données
+    header('Location: index.php');
 
-  //--- Déconnection de la base de données
-  header('Location: index.php');
-  
 }
 //------------------------------------------------------------------------------
 //  Programme Principal
 //
-if (  isset($_GET['id_t'])  )
-{
-  $id = $_GET['id_t'] ;
+if (isset($_GET['id_t'])) {
+    $id = $_GET['id_t'];
 
-  if (  isset($id)  &&  ($id!='')  )
-  {
-    //--- Suppression ...
-    SupprimerBD ( $id ) ;
-  }
+    if (isset($id) && ($id != '')) {
+        //--- Suppression ...
+        SupprimerBD($id);
+    }
 }
- 
+
 //------------------------------------------------------------------------------
 ?>
 <!DOCTYPE html>
@@ -63,32 +54,30 @@ if (  isset($_GET['id_t'])  )
     <body>
     <p>Etes vous sur de vouloir supprimer</p>
 <?php
-    echo "<input type='button' value='OUI'>";
-    echo"<input type='button' value='NON'>";
+echo "<input type='button' value='OUI'>";
+echo "<input type='button' value='NON'>";
 
-    $btn = document.querySelector('input');
+$btn = document . querySelector('input');
 
-    $btn.addEventListener('click', updateBtn);
-    function updateBtn() {
-    if ($btn.value === 'OUI') {
-        if (  isset($_GET['id_t'])  )
-  {
-    $id = $_GET['id_t'] ;
+$btn . addEventListener('click', updateBtn);
+function updateBtn()
+{
+    if ($btn . value === 'OUI') {
+        if (isset($_GET['id_t'])) {
+            $id = $_GET['id_t'];
 
-    if (  isset($id)  &&  ($id!='')  )
-    {
-      //--- Suppression ...
-      SupprimerBD ( $id ) ;
+            if (isset($id) && ($id != '')) {
+                //--- Suppression ...
+                SupprimerBD($id);
+            }
+        }
+
+    } else {
+        header('Location: index.php');
+
     }
-  }
-
-    
-  } else {
-    header('Location: index.php');
-    
-  }
 }
 ?>
-        
+
     </body>
     </html>

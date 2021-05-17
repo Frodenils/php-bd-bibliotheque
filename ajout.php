@@ -13,28 +13,27 @@ par un Programme sur le Serveur </h2>
 <center>
 
 <?php
-  $love  = $_GET ['love']   ;
+$love = $_GET['love'];
 
-  
-  //--- Connection au SGBDR 
-  $DataBase = mysqli_connect ( "mysql-seblah.alwaysdata.net" , "seblah_cdi" , "Bibliotheque50*" ) ;
+//--- Connection au SGBDR
+$DataBase = mysqli_connect("mysql-nilsfrd.alwaysdata.net", "nilsfrd_cdi", "Bibliotheque50*");
 
-  //--- Ouverture de la base de donn�es
-  mysqli_select_db ( $DataBase, "seblah_bibliotheque" ) ;
+//--- Ouverture de la base de donn�es
+mysqli_select_db($DataBase, "nilsfrd_bibliotheque");
 
-  //--- Pr�paration de la requ�te
-  $Requete = "INSERT INTO Type_de_livre ( id_t ,libelle )
+//--- Pr�paration de la requ�te
+$Requete = "INSERT INTO type_livre ( id_t ,libelle )
                   VALUES ('','$love');";
-    
-  //--- Ex�cution de la requ�te (fin du script possible sur erreur ...)
-  $Resultat = mysqli_query ( $DataBase, $Requete )  or  die(mysqli_error($DataBase) ) ;
 
-  //--- D�connection de la base de donn�es
-  mysqli_close ( $DataBase ) ;  
+//--- Ex�cution de la requ�te (fin du script possible sur erreur ...)
+$Resultat = mysqli_query($DataBase, $Requete) or die(mysqli_error($DataBase));
+
+//--- D�connection de la base de donn�es
+mysqli_close($DataBase);
 ?>
 
 </center>
-<p> <?php  print('$love');  ?> à bien été ajouter à la liste <P>
+<p> <?php print('$love');?> à bien été ajouter à la liste <P>
 <br>
 <a href='index.php'>Retour à la liste</a>
 <br>

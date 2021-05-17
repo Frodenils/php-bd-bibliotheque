@@ -1,26 +1,21 @@
-<?php 
+<?php
 //On demarre une sesssion
 session_start();
 
-if ((isset($_GET['id_t'])) && !empty($_GET['id_t']))
-{
-    $id =strip_tags($_GET['id_t']);
-
-
-   
+if ((isset($_GET['id_t'])) && !empty($_GET['id_t'])) {
+    $id = strip_tags($_GET['id_t']);
 
     // On se connecte à la base de données
-    include_once('connect.php');
-    //On exécute la reque^te SQL et on stocke le résultat dans un tableau associatif 
+    include_once 'connect.php';
+    //On exécute la reque^te SQL et on stocke le résultat dans un tableau associatif
 
-    
-    $sql ='SELECT id_t, libelle FROM Type_de_livre WHERE id_t = ?;';
+    $sql = 'SELECT id_t, libelle FROM type_livre WHERE id_t = ?;';
 
-    //on prepare la requete 
-    $stmt = mysqli_prepare($db,$sql);
+    //on prepare la requete
+    $stmt = mysqli_prepare($db, $sql);
 
     // on relie la variable id
-    mysqli_stmt_bind_param($stmt,'i',$id);
+    mysqli_stmt_bind_param($stmt, 'i', $id);
 
 //on execute la requete
     mysqli_stmt_execute($stmt);
@@ -30,22 +25,21 @@ if ((isset($_GET['id_t'])) && !empty($_GET['id_t']))
 
     mysqli_stmt_fetch($stmt);
 
-    //On ferme la connexion 
-    include_once('close.php');
+    //On ferme la connexion
+    include_once 'close.php';
     if (!$libelle) {
-        $_SESSION['erreur'] ="Ce type de livre n'existe pas ";
+        $_SESSION['erreur'] = "Ce type de livre n'existe pas ";
 
-        header ('Location : index.php');
+        header('Location : index.php');
         exit();
     }
-    } else {
-        $_SESSION['erreur'] ="URL INVALIDE";
-        header ('Location : index.php');
+} else {
+    $_SESSION['erreur'] = "URL INVALIDE";
+    header('Location : index.php');
     exit();
-    }
+}
 
-    
-    ?>
+?>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -59,18 +53,18 @@ if ((isset($_GET['id_t'])) && !empty($_GET['id_t']))
     <main class ="container">
         <div class="row">
             <section class="col-12">
-            <h1>Details du type de livre <?php print($libelle); ?></h1>
-            <p>ID : <?php print($id) ;?> </p>
-            <p>libelllé : <?php print($libelle); ?> </p>
+            <h1>Details du type de livre <?php print($libelle);?></h1>
+            <p>ID : <?php print($id);?> </p>
+            <p>libelllé : <?php print($libelle);?> </p>
             <p>
             <a class ="btn btn-info" href="index.php"> Retour à la liste </a>
-            
+
             <a class="btn btn-primary" href='edit.php?id_t=<?php print($id);?>'>Modifier </a><br>
-            
+
             </p>
             </section>
         </div>
     </main>
-        
+
     </body>
     </html>

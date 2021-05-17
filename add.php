@@ -1,49 +1,44 @@
 <?php
- // On demarre la session
+// On demarre la session
 session_start();
- // on Verifie si les données du formulaire on été envoyé
+// on Verifie si les données du formulaire on été envoyé
 
-if((isset($_POST['label'])) && (!empty($_POST['label'])) )  {
-    $_SESSION['message'] = ' not empty-Nouveau type de livre : "'.$_POST['label'].'"';
+if ((isset($_POST['label'])) && (!empty($_POST['label']))) {
+    $_SESSION['message'] = ' not empty-Nouveau type de livre : "' . $_POST['label'] . '"';
 
+    // On se connecte à la base de données
 
+    include_once 'connect.php';
 
+    try {
+        // On nettoi les données envoyés
+        $label = strip_tags($_POST['label']);
 
+        //On prepare la requete
+        $sql = "INSERT INTO type_livre (libelle) VALUES(?);";
+        $stmt = mysqli_prepare($db, $sql);
+        mysqli_stmt_bind_param($stmt, 's', $label);
 
- // On se connecte à la base de données
+        // On execute la requete
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    } catch (Exception $e) {
+        $_SESSION['erreur'] = "Une erreur est intervenue : " . $e->getMessage();
+    }
 
-include_once 'connect.php';
+    // On redige un message pour l'utilisateur
+    $_SESSION['message'] = 'Le type de livre "' . $label . '" a été enregistré';
 
-try {
-    // On nettoi les données envoyés
- $label = strip_tags($_POST['label']);
+    // On ferme la connexion
+    include_once 'close.php';
 
- //On prepare la requete
-$sql ="INSERT INTO Type_de_livre (libelle) VALUES(?);";
-$stmt = mysqli_prepare($db,$sql);
-mysqli_stmt_bind_param($stmt,'s',$label);
+    // On renvoi vers la page principale
+    header('Location: index.php');
 
- // On execute la requete
-mysqli_stmt_execute($stmt);
-mysqli_stmt_close($stmt);
-} catch (Exception $e) {
-    $_SESSION['erreur'] = "Une erreur est intervenue : ". $e->getMessage(); 
 }
+// On affiche le fomulaire de saiso d'uun nouveau type de livre
 
- 
- // On redige un message pour l'utilisateur
- $_SESSION['message'] ='Le type de livre "'.$label.'" a été enregistré';
-
- // On ferme la connexion
- include_once 'close.php';
-
- // On renvoi vers la page principale
- header('Location: index.php');
- 
-}
- // On affiche le fomulaire de saiso d'uun nouveau type de livre
-
- ?>
+?>
  <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -54,24 +49,24 @@ mysqli_stmt_close($stmt);
      <title>Ajouter un type de livre</title>
  </head>
  <body>
-     <main class="container"> 
+     <main class="container">
         <div class="row">
-        
+
             <section class="col-12">
                 <?php
-                    if(!empty($_SESSION['erreur'])){
-                        print('<div class="alert alert-danger" role="alert">'.$_SESSION['erreur'].'</div>');
-                        
-                        $_SESSION['erreur'] = "";
-                        }
+if (!empty($_SESSION['erreur'])) {
+    print('<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>');
 
-                    if(!empty($_SESSION['message'])){
-                            print('<div class="alert alert-danger" role="alert">'.$_SESSION['erreur'].'</div>');
-                            
-                        $_SESSION['messgae'] = "";
-                        }
+    $_SESSION['erreur'] = "";
+}
 
-                ?>
+if (!empty($_SESSION['message'])) {
+    print('<div class="alert alert-danger" role="alert">' . $_SESSION['message'] . '</div>');
+
+    $_SESSION['message'] = "";
+}
+
+?>
                 <h1>Ajouter un type de livre</h1>
 
                 <form method="POST">
