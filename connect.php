@@ -1,11 +1,19 @@
 <?php
+
 include('conf.php');
-$bdd = mysqli_connect(DBHOST,DBUSER, DBPASSWD,DBNAME);
+
+try {
+    $bdd = mysqli_connect(DBHOST,DBUSER,DBPSWD,DBNAME);
+} catch (\Throwable $e) {
+    $_SESSION['error'] = 'Erreur de co a la BDD: ' . $e->getMessage();
+}
+
+
 if (mysqli_connect_errno()){
-    print('Erreur :'.mysqli_connect_error());
+    $_SESSION['error'] = 'Erreur de co a la BDD: ' . mysqli_connect_error();
     exit();
 }
-else  {
-    print('Connexion à la base de donnée  ok');
+else {
+    $_SESSION['Message'] = 'Connexion OK !';
 }
 ?>
