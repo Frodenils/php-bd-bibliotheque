@@ -4,18 +4,18 @@ session_start();
 
 // Est ce que l'id existe et n'est pas vide dans l'URL (avec la méthode HHIP "GET")
 
-if ( (isset($_GET['id'])) && !empty($_GET['id'])) {
+if ( (isset($_GET['id_l'])) && !empty($_GET['id_l'])) {
     
     //On Nettoie l'id qu'on vient de recevoir
     //Pour supprimer un code malveillant éventuel
     //TODO
-    $id = strip_tags($_GET['id']);
+    $id = strip_tags($_GET['id_l']);
 
     //On se co a la BDD
     include_once('connect.php');
 
     //
-    $sql = 'SELECT id, libelle FROM tbl_typeL WHERE id = ?;';
+    $sql = 'SELECT id_l, titre_l FROM livre WHERE id_l = ?;';
 
     // On prepare la requête
     $stmt = mysqli_prepare($bdd, $sql);

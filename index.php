@@ -6,7 +6,7 @@ session_start();
 include('connect.php');
 
 // On exec la requete SQL et on stocke le résultat dans un tableau associatif
-$sql = 'SELECT id, libelle FROM tbl_typeL;';
+$sql = 'SELECT id_l, titre_l FROM livre;';
 $resultat = mysqli_query( $bdd, $sql);
 
 //on ferme la connexion
@@ -61,9 +61,9 @@ if (!empty($_SESSION['Message'])) {
     foreach ($resultat as $type) {
     ?>  
         <tr>
-        <td><?php print($type['id']); ?></td>
-        <td><?php print($type['libelle']); ?></td>
-        <td><a href="details.php?id=<?php print($type['id']); ?>">Voir</a> Modifier Supprimer</td>
+        <td><?php print($type['id_l']); ?></td>
+        <td><?php print($type['titre_l']); ?></td>
+        <td><a href="details.php?id_l=<?php print($type['id_l']); ?>">Voir</a> Modifier Supprimer</td>
         </tr>
     <?php
        }
