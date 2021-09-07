@@ -1,3 +1,3 @@
 <?php
-mysqli_close($db)
+    mysqli_close($db)
 ?>

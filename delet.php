@@ -1,5 +1,3 @@
-
-
 <?php
 //------------------------------------------------------------------------------
 //  Consultation de la BD et affichage des enregistrements dans un tableau
@@ -39,7 +37,6 @@ if (isset($_GET['id_t'])) {
         SupprimerBD($id);
     }
 }
-
 //------------------------------------------------------------------------------
 ?>
 <!DOCTYPE html>

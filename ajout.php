@@ -1,43 +1,37 @@
-<html>
-<head>
-  <title>	PHP - Ajouter n�6	</title>
-  <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-</head>
-<body>
-<h1 align=center> PHP - Exemple n�6 </h1>
-<h2 align=center> Consultation d'une Base de Donn�es <br>
-par un Programme sur le Serveur </h2>
-<hr><br>
+<!doctype html>
+<html lang="fr">
+  <head>
+      <title>PHP - Ajouter 6</title>
 
-<center>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<?php
-$love = $_GET['love'];
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  </head>
 
-//--- Connection au SGBDR
-$DataBase = mysqli_connect("mysql-nilsfrd.alwaysdata.net", "nilsfrd_cdi", "Bibliotheque50*");
+  <body>
+    <center>
+      <h1>PHP - Exemple 6</h1>
+      <h2>Consultation d'une Base de Données<br>par un Programme sur le Serveur</h2><hr><br>
 
-//--- Ouverture de la base de donn�es
-mysqli_select_db($DataBase, "nilsfrd_bibliotheque");
+      <?php
+        $love = $_GET['love'];
+        $DataBase = mysqli_connect("mysql-nilsfrd.alwaysdata.net", "nilsfrd_cdi", "Bibliotheque50*");
 
-//--- Pr�paration de la requ�te
-$Requete = "INSERT INTO type_livre ( id_t ,libelle )
-                  VALUES ('','$love');";
+        mysqli_select_db($DataBase, "nilsfrd_bibliotheque");
 
-//--- Ex�cution de la requ�te (fin du script possible sur erreur ...)
-$Resultat = mysqli_query($DataBase, $Requete) or die(mysqli_error($DataBase));
+        $Requete = "INSERT INTO type_livre ( id_t ,libelle )
+                    VALUES ('','$love');";
+        $Resultat = mysqli_query($DataBase, $Requete) or die(mysqli_error($DataBase));
 
-//--- D�connection de la base de donn�es
-mysqli_close($DataBase);
-?>
+        mysqli_close($DataBase);
+      ?>
 
-</center>
-<p> <?php print('$love');?> à bien été ajouter à la liste <P>
-<br>
-<a href='index.php'>Retour à la liste</a>
-<br>
+      <p> <?php print('$love');?>à bien été ajouter à la liste<P><br>
 
-<hr>
-</BODY>
-</HTML>
+      <a href='index.php'>Retour à la liste</a><br><hr>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    </center>
+  </body>
+</html>
